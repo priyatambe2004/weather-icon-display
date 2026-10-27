@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nimbus – Weather Icon Display</title>
+<meta name="description" content="Pick a weather condition and watch the icon, description and sky change.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-weather="default">
+<div class="sky" aria-hidden="true"></div>
+<div id="fx" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="logo" href="#app"><span class="orb"></span>Nimbus</a>
+    <nav aria-label="Main"><a href="#app">Forecast</a><a href="#gallery">All skies</a><a href="#about">How it works</a></nav>
+  </div>
+</header>
+
+<main>
+  <section class="wrap hero" id="app">
+    <div class="intro">
+      <p class="eyebrow">Weather icon display</p>
+      <h1>Pick a <em>sky.</em></h1>
+      <p class="lede">Choose a weather condition and the page changes its icon, description, background and details to match. All data is built into the page, so no internet or API is needed.</p>
+
+      <div class="controls">
+        <label for="cond">Weather condition</label>
+        <div class="selrow">
+          <select id="cond"><option value="">Select a condition…</option></select>
+          <button class="btn" id="random" type="button">Surprise me</button>
+        </div>
+        <div class="units" id="units" role="group" aria-label="Temperature unit">
+          <button type="button" data-unit="C" aria-pressed="true">°C</button>
+          <button type="button" data-unit="F" aria-pressed="false">°F</button>
+        </div>
+      </div>
+    </div>
+
+    <article class="panel" aria-live="polite">
+      <div class="icon" id="icon" role="img" aria-label="Weather icon"></div>
+      <h2 id="label">Pick a sky</h2>
+      <p class="desc" id="desc"></p>
+      <div class="stats">
+        <div class="stat"><span>Temperature</span><b id="sTemp">–</b></div>
+        <div class="stat"><span>Feels like</span><b id="sFeels">–</b></div>
+        <div class="stat"><span>Humidity</span><b id="sHum">–</b></div>
+        <div class="stat"><span>Wind</span><b id="sWind">–</b></div>
+        <div class="stat"><span>Rain chance</span><b id="sRain">–</b></div>
+        <div class="stat"><span>UV index</span><b id="sUV">–</b></div>
+      </div>
+      <div class="tips">
+        <div><h3>What to wear</h3><p id="wear">–</p></div>
+        <div><h3>Good for</h3><p id="good">–</p></div>
+      </div>
+    </article>
+  </section>
+
+  <section class="wrap" id="gallery">
+    <h2 class="sec">All skies</h2>
+    <p class="sub">Tap any card to load it.</p>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section class="wrap" id="about">
+    <h2 class="sec">How it works</h2>
+    <div class="about">
+      <div>
+        <p>Every condition lives in one JavaScript object. The dropdown value is the key, so showing a condition is a single lookup.</p>
+<pre><code>const WEATHER = {
+  sunny: { label: 'Sunny', icon: sunIcon, temp: 32 },
+  rainy: { label: 'Rainy', icon: rainIcon, temp: 21 }
+};
+
+const data = WEATHER[select.value] ?? DEFAULT;
+render(data);</code></pre>
+      </div>
+      <ul class="notes">
+        <li><b>Object, not if/else</b> Adding a new condition means adding one entry. No new branches.</li>
+        <li><b>Default state</b> An unknown or empty key falls back to <code>DEFAULT</code>, so the page is never blank.</li>
+        <li><b>CSS does the mood</b> The script only sets <code>data-weather</code> on the page. The CSS picks the sky colours and effects.</li>
+      </ul>
+    </div>
+    <p class="note">The temperatures and other values are sample data, not a real forecast.</p>
+  </section>
+</main>
+
+<footer><div class="wrap">© 2026 Nimbus · Built for Task 27 · HTML, CSS and JavaScript</div></footer>
+<script src="script.js"></script>
+</body>
+</html>
